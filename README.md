@@ -1,13 +1,20 @@
 # AI 기반 네트워크 라우팅·운용 시스템
 
-동적으로 토폴로지가 변하는 위성 네트워크의 라우팅을 강화학습으로 최적화하고,
+![CI](https://github.com/junghyun-han/AI-Network-Routing/actions/workflows/ci.yml/badge.svg)
+
+동적으로 토폴로지가 변하는 네트워크에서 라우팅을 강화학습으로 최적화하고,
 그 위에 실제 통신망 운용에 필요한 기능(품질·트래픽 모니터링, 장애 선제 탐지,
 최적해 대비 성능 검증, 컨테이너 기반 서빙·배포, 관측, 프로토콜 라우팅)을 붙여
 **하나의 운용 가능한 시스템**으로 구현한 것이다.
 
-도메인은 저궤도(LEO) 위성 메시망이지만, 다루는 문제(라우팅 최적화 · 임박 링크 단절
-회피 · 트래픽/E2E 가시성 · 장애 선제 예측 · 자동 배포·관측 · 프로토콜 수렴·이중화)는
-동적 네트워크라면 공통으로 마주하는 것이며, 구현 방식도 통신망 운용에 그대로 옮겨진다.
+<p align="center">
+  <img src="analysis/figures/fig_quality_stability.png" width="46%" alt="품질-안정성 tradeoff: 제안 정책이 최적해 근처에서 안정+효율">
+  <img src="anomaly/figures/fig_roc.png" width="46%" alt="링크 단절 선제 탐지 ROC (AUC 0.840)">
+</p>
+<p align="center"><sub>제안 라우팅 정책이 최적해(Oracle) 근처의 안정·효율 영역에 위치(좌) · 링크 단절을 사전 탐지 ROC-AUC 0.840(우)</sub></p>
+
+라우팅 최적화부터 장애 선제 탐지, 컨테이너 배포·관측, 프로토콜 수렴·이중화까지
+동적 네트워크 운용의 전 계층을 코드와 수치로 다룬다. (검증 환경은 대규모 저궤도(LEO) 위성 메시망.)
 
 전체 구조와 인터페이스는 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
