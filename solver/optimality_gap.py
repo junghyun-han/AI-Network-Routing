@@ -12,7 +12,8 @@ antenna-alignment cost couples two consecutive hops, so the state is
      dynamic-programming oracle recorded in the experiment CSV;
   3. report how close the learned policy comes to this optimum.
 
-Physics come from sim/env_v2.py; no model weights or training needed.
+This turns a heuristic comparison into an optimality certificate: exactly
+how much routing performance the online policy leaves on the table.
 
 Usage:
     python optimality_gap.py --episodes ../data/episodes_all_v2.csv \

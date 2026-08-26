@@ -9,8 +9,7 @@ time-varying topology.
 
 Method: at each sampled time, take the shortest end-to-end route, remove
 each link on it, and recompute. The increase in path length is that link's
-impact at that moment; disconnection is a single point of failure. Standard
-graph algorithms, no model or training.
+impact at that moment; disconnection is a single point of failure.
 
 Usage:
     python criticality.py --stride 2 --out .

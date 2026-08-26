@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  experiments:
+    name: run experiments (smoke)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install pandas numpy matplotlib scikit-learn ortools networkx \
+                      fastapi "uvicorn[standard]" httpx
+
+      - name: Analysis (full - it is fast)
+        run: python analysis/ops_analysis.py --episodes data/episodes_all_v2.csv --out analysis
+
+      - name: Anomaly detection
+        run: python anomaly/detect.py --out anomaly
+
+      - name: Solver optimality gap (small sample)
+        run: python solver/optimality_gap.py --episodes data/episodes_all_v2.csv --n-t0 3 --out solver
+
+      - name: Traffic visibility (subsampled)
+        run: python traffic/visibility.py --stride 40 --out traffic
+
+      - name: Impact analysis (subsampled)
+        run: python impact/criticality.py --stride 40 --out impact
+
+      - name: Serving API smoke test
+        env:
+          MODEL_PATH: serving/model/PPO-GCN_seed0.pt
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python - <<'PY'
+          from fastapi.testclient import TestClient
+          from serving.app import app
+          c = TestClient(app)
+          assert c.get("/health").json()["status"] == "ok"
+          r = c.get("/route/100").json()
+          assert r["success"] and r["hops"] > 0, r
+          d = c.get("/detect/100").json()
+          assert d["n_live_links"] > 0, d
+          print("serving smoke OK:", r["hops"], "hops,", d["n_imminent"], "imminent")
+          PY
+
+  docker:
+    name: build container image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -f serving/Dockerfile -t leo-router:ci .
+      - name: Smoke test the image
+        run: |
+          docker run -d --name leo -p 8000:8000 leo-router:ci
+          for i in $(seq 1 20); do
+            curl -sf localhost:8000/health && break || sleep 3
+          done
+          curl -sf localhost:8000/route/100 | grep -q '"success":true'
+          docker rm -f leo

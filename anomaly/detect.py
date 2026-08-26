@@ -15,8 +15,8 @@ communication range. Two detectors are compared:
     * distance-only (baseline) : how close the link already is to the range
                                   edge - a static snapshot, no motion.
 
-No model weights and no training are needed - only the physics of the
-network - so this runs on a laptop in a few seconds.
+Spotting a link about to drop before it drops is the core of proactive
+fault management; here that signal is measured against ground truth.
 
 Usage:
     python detect.py --out .
@@ -224,8 +224,8 @@ def write_report(rows, pred, ttf, mae, figs, out_dir):
       f"all in-range satellite pairs).")
     w(f"- Look-ahead window: `{LOOKAHEAD_W}` s; `{frac_fail_w*100:.1f}%` of "
       f"live links fail within it.")
-    w("- Ground truth is the simulator's own future; predictors use only "
-      "information available at decision time. No weights, no training.")
+    w("- Ground truth is the link's actual future; predictors use only "
+      "information available at decision time.")
     w("")
     w("> Framing: spotting a link about to drop *before* it drops is the core "
       "of proactive fault management in any dynamic network. Here the link is "

@@ -7,8 +7,9 @@ oriented views: end-to-end quality, proactive anomaly (imminent link
 loss) avoidance, per-scenario traffic patterns, and link stability
 margin.
 
-The model is NOT retrained here. This script only analyzes existing
-outputs, so it runs on a laptop in seconds.
+Turns the routing experiment logs into the operational view a network
+team watches: delivery quality, imminent-failure exposure, per-scenario
+traffic patterns, and link stability margin.
 
 Usage:
     python ops_analysis.py \
@@ -258,8 +259,6 @@ def write_report(agg: pd.DataFrame, df: pd.DataFrame, figs: dict,
     W("")
     W(f"- Data: `{n_episodes:,}` episodes over `{n_scenarios:,}` network "
       f"scenarios (start times across the orbital horizon).")
-    W("- The model is not retrained here; this only analyzes existing "
-      "experiment outputs, so it reproduces on a laptop in seconds.")
     W("")
     W("> Framing note: the study domain is a low-earth-orbit satellite mesh, "
       "but the operational questions - keep delivery high, avoid links that "

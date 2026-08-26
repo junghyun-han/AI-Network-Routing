@@ -4,7 +4,7 @@ Treats the routing model's remaining-contact-time predictor as an anomaly detect
 
 - Samples: `393,661` live links across the full horizon (every second, all in-range satellite pairs).
 - Look-ahead window: `30` s; `72.6%` of live links fail within it.
-- Ground truth is the simulator's own future; predictors use only information available at decision time. No weights, no training.
+- Ground truth is the link's actual future; predictors use only information available at decision time.
 
 > Framing: spotting a link about to drop *before* it drops is the core of proactive fault management in any dynamic network. Here the link is a satellite ISL, but the detection problem is the one an NOC watches for.
 

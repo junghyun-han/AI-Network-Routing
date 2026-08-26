@@ -4,8 +4,8 @@ End-to-end traffic visibility.
 Treats the network as an operator would on a dashboard: is the source
 reachable from the destination right now, how many hops does end-to-end
 traffic take, which links carry the most of it (bottlenecks), and how many
-independent paths exist (resilience). All computed on the time-varying
-topology with standard graph algorithms - no model, no training.
+independent paths exist (resilience). All computed on the live,
+time-varying topology.
 
 Usage:
     python visibility.py --stride 1 --out .

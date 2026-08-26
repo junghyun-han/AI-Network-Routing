@@ -3,7 +3,6 @@
 An operations-oriented reading of the AI routing policy: end-to-end quality, proactive avoidance of imminent link failures, per-scenario traffic patterns, and link stability margin.
 
 - Data: `79,200` episodes over `1,200` network scenarios (start times across the orbital horizon).
-- The model is not retrained here; this only analyzes existing experiment outputs, so it reproduces on a laptop in seconds.
 
 > Framing note: the study domain is a low-earth-orbit satellite mesh, but the operational questions - keep delivery high, avoid links that are about to drop, stay efficient, hold a safety margin - are the same ones any dynamic packet network faces.
 

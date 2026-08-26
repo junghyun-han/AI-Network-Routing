@@ -1,0 +1,66 @@
+# A running BGP/OSPF lab with FRRouting.
+#   docker compose -f netlab/docker-compose.yml up -d
+#   docker exec -it netlab-r1-1 vtysh -c "show ip ospf neighbor"
+#   docker exec -it netlab-r1-1 vtysh -c "show ip bgp"
+#
+# Topology:
+#   OSPF core, area 0, AS 65001:   r1 -- r2 -- r3 -- r1  (ring, redundant)
+#   eBGP edge, AS 65002:           r1 == r4  (r4 originates 203.0.113.0/24)
+#
+# Link addressing (/24 per link; router IPs avoid the docker gateway .254):
+#   r1-r2 10.0.12.0/24   r2-r3 10.0.23.0/24   r1-r3 10.0.13.0/24   r1-r4 10.0.14.0/24
+# Loopbacks: r1 10.255.1.1  r2 10.255.2.2  r3 10.255.3.3  r4 10.255.4.4
+
+x-frr: &frr
+  image: netlab-frr:local
+  build: ./frrimg
+  privileged: true
+  sysctls:
+    - net.ipv4.ip_forward=1
+
+services:
+  r1:
+    <<: *frr
+    volumes:
+      - ./daemons:/config/daemons:ro
+      - ./r1/frr.conf:/config/frr.conf:ro
+    networks:
+      net12: { ipv4_address: 10.0.12.1 }
+      net13: { ipv4_address: 10.0.13.1 }
+      net14: { ipv4_address: 10.0.14.1 }
+
+  r2:
+    <<: *frr
+    volumes:
+      - ./daemons:/config/daemons:ro
+      - ./r2/frr.conf:/config/frr.conf:ro
+    networks:
+      net12: { ipv4_address: 10.0.12.2 }
+      net23: { ipv4_address: 10.0.23.2 }
+
+  r3:
+    <<: *frr
+    volumes:
+      - ./daemons:/config/daemons:ro
+      - ./r3/frr.conf:/config/frr.conf:ro
+    networks:
+      net13: { ipv4_address: 10.0.13.3 }
+      net23: { ipv4_address: 10.0.23.3 }
+
+  r4:
+    <<: *frr
+    volumes:
+      - ./daemons:/config/daemons:ro
+      - ./r4/frr.conf:/config/frr.conf:ro
+    networks:
+      net14: { ipv4_address: 10.0.14.4 }
+
+networks:
+  net12:
+    ipam: { config: [ { subnet: 10.0.12.0/24, gateway: 10.0.12.254 } ] }
+  net23:
+    ipam: { config: [ { subnet: 10.0.23.0/24, gateway: 10.0.23.254 } ] }
+  net13:
+    ipam: { config: [ { subnet: 10.0.13.0/24, gateway: 10.0.13.254 } ] }
+  net14:
+    ipam: { config: [ { subnet: 10.0.14.0/24, gateway: 10.0.14.254 } ] }
