@@ -20,7 +20,7 @@ Outputs:
     figures/fig_quality_stability.png
     figures/fig_contact_margin.png
     figures/fig_traffic_horizon.png
-    OPERATIONS_REPORT.md   (tables + embedded figures)
+    README.md              (tables + embedded figures)
 """
 
 from __future__ import annotations
@@ -239,7 +239,7 @@ def _fmt(col: str, v: float) -> str:
 
 def write_report(agg: pd.DataFrame, df: pd.DataFrame, figs: dict,
                  out_dir: str) -> str:
-    p = os.path.join(out_dir, "OPERATIONS_REPORT.md")
+    p = os.path.join(out_dir, "README.md")
     prop = agg.loc[PROPOSED]
 
     # a couple of derived talking points
