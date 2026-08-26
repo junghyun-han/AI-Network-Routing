@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install pandas numpy matplotlib scikit-learn ortools networkx \
-                      fastapi "uvicorn[standard]" httpx
+                      fastapi "uvicorn[standard]" httpx prometheus-client
 
       - name: Analysis (full - it is fast)
         run: python analysis/ops_analysis.py --episodes data/episodes_all_v2.csv --out analysis
