@@ -189,7 +189,7 @@ def solve_optimal(env: ETRIEnvV2, t0: int, L: int = 10):
     model.Maximize(sum(ri * x for arcs in out_arcs.values() for x, ri in arcs))
 
     solver = cp_model.CpSolver()
-    solver.parameters.max_time_in_seconds = 10.0
+    solver.parameters.max_time_in_seconds = 20.0
     solver.parameters.num_search_workers = 8
     status = solver.Solve(model)
     if status != cp_model.OPTIMAL:            # require a proven optimum
@@ -263,6 +263,10 @@ def main():
                          oracle=float(oracle[t0]), policy=float(pol[t0]),
                          valid=valid))
     res = pd.DataFrame(recs)
+    if res.empty:
+        print("no scenarios solved to a proven optimum within the time limit; "
+              "try a larger --n-t0 or a longer solver time budget")
+        return
 
     # metrics
     res["gap"] = res["oracle"] - res["policy"]
