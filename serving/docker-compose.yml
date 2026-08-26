@@ -1,0 +1,19 @@
+# Local run without Kubernetes:
+#   docker compose -f serving/docker-compose.yml up --build
+# then: curl localhost:8000/route/100
+services:
+  router:
+    build:
+      context: ..
+      dockerfile: serving/Dockerfile
+    image: leo-router:latest
+    ports:
+      - "8000:8000"
+    environment:
+      MODEL_PATH: /app/serving/model/PPO-GCN_seed0.pt
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped

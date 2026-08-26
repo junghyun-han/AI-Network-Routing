@@ -1,0 +1,4 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+numpy>=1.26
+# torch is installed separately in the Dockerfile from the CPU wheel index
