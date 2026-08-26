@@ -31,7 +31,7 @@
 | **Prometheus + Grafana** 관측 | `/metrics` → 스크레이프 → 대시보드, 실기동 검증 | [`observability/`](observability/) |
 | **BGP/OSPF** 프로토콜 라우팅 (FRR) | OSPF Full 인접 · eBGP 수렴 · 링크장애 재수렴 | [`netlab/`](netlab/) |
 | **Terraform / EKS** 클라우드 IaC | VPC+EKS 정의, `terraform validate` 통과 | [`terraform/`](terraform/) |
-| **CI/CD** (GitHub Actions) | push마다 실험 검증 + 컨테이너 빌드·기동 | [`.github/ci-workflow/`](.github/ci-workflow/) |
+| **CI/CD** (GitHub Actions) | push마다 실험 검증 + 컨테이너 빌드·기동 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) |
 
 각 폴더의 `README.md`에 방법·수치·검증 결과가 정리되어 있다.
 
