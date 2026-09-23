@@ -6,7 +6,12 @@ abstracts away. Not a simulation of routing - actual FRR daemons exchanging
 LSAs and BGP updates.
 
 > Scope note: this is a hands-on **lab** built to show protocol configuration
-> and convergence, not production operations experience.
+> and convergence, not production operations experience. It is no longer
+> separate from the AI work: [`closedloop/`](../closedloop/) drives it from the
+> routing policy's imminent-link-loss detector (served on Kubernetes), which
+> drains the r1-r3 link through OSPF before a replayed satellite-link failure
+> hits it. It is still a 4-router lab on Docker (emulation), not a
+> constellation or a production network.
 
 ## Topology
 

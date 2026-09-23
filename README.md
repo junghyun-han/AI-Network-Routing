@@ -39,8 +39,29 @@
 | **BGP/OSPF** 프로토콜 라우팅 (FRR) | OSPF Full 인접 · eBGP 수렴 · 링크장애 재수렴 | [`netlab/`](netlab/) |
 | **Terraform / EKS** 클라우드 IaC | VPC+EKS 정의, `terraform validate` 통과 | [`terraform/`](terraform/) |
 | **CI/CD** (GitHub Actions) | push마다 실험 검증 + 컨테이너 빌드·기동 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) |
+| **폐루프** (탐지 → 선제 우회) | K8s 서빙 탐지 → OSPF 비용 조정, 조용한 단절 시 단절시간 34.2 s → **0 s** | [`closedloop/`](closedloop/) |
 
 각 폴더의 `README.md`에 방법·수치·검증 결과가 정리되어 있다.
+
+## 폐루프: AI 탐지 → OSPF 선제 우회
+
+Kubernetes(kind)에 배포한 라우팅 정책의 임박 단절 탐지(`GET /detect`)를 컨트롤러가 매초
+호출하고, 감시 중인 링크가 탐지되면 FRR 랩에서 그 링크의 OSPF 비용을 양 끝에서 올려
+링크가 끊기기 **전에** 트래픽을 우회시킨다. 관측(Prometheus·Grafana), 이상(임박 단절) 탐지,
+자동 경로 복구가 하나의 흐름으로 동작하며, 손실은 실제 패킷(ping 0.1 s 간격)으로 측정했다.
+
+| 링크 장애 유형 (OSPF hello/dead) | 반응형 (OSPF 단독) | 선제형 (AI 탐지 → OSPF 우회) |
+|---|---|---|
+| 조용한 단절, 기본 타이머 10/40 s | 단절 34.2 ± 2.6 s · 손실 57.0% | **0 s · 0%** (5/5회) |
+| 조용한 단절, 튜닝 타이머 1/4 s | 단절 3.5 ± 0.4 s · 손실 5.8% | **0 s · 0%** (5/5회) |
+| 캐리어 다운 (인터페이스 down) | 0 s (0.1 s 해상도에서 손실 없음) | 0 s (차이 없음) |
+
+<sub>손실 = 장애 전후 60초 창에서 응답이 없던 시간 비율. 각 5회 반복.</sub>
+
+> 에뮬레이션이다: 시뮬레이터의 위성 링크 1개(26–44, 탐지 리드타임 2 s)의 수명을
+> 4대 라우터 랩의 r1–r3 링크에 실시간(1:1)으로 재생했다. 상용망·실제 위성이 아니며,
+> 이득은 반응형 장애 감지 지연을 없앤 만큼이다(캐리어 다운처럼 즉시 감지되는 장애에선 차이 없음).
+> 방법·한계는 [`closedloop/README.md`](closedloop/README.md).
 
 ---
 
@@ -59,6 +80,7 @@ python impact/criticality.py --out impact
 docker compose -f serving/docker-compose.yml up --build         # 라우팅 서빙
 docker compose -f observability/docker-compose.yml up --build   # 관측 스택
 docker compose -f netlab/docker-compose.yml up -d               # BGP/OSPF 라우팅
+bash closedloop/run.sh                                           # 폐루프 (랩 + kind + 관측 + 실험)
 # Kubernetes 배포: serving/README.md   ·   클라우드 IaC: terraform/README.md
 ```
 
@@ -76,6 +98,7 @@ AI-Network-Routing/
   serving/        컨테이너 서빙 + Kubernetes 배포 (FastAPI)
   observability/  Prometheus + Grafana 관측
   netlab/         BGP/OSPF 라우팅 (FRRouting)
+  closedloop/     AI 탐지 → OSPF 선제 우회 폐루프 (K8s 서빙 + FRR 랩)
   terraform/      EKS 클라우드 IaC
   docs/           시스템 아키텍처
   .github/        CI/CD
@@ -84,4 +107,5 @@ AI-Network-Routing/
 ```
 
 `sim/`의 라우팅 정책·환경은 석사 연구 산출물이며, 이 저장소는 그 위에
-**운용·플랫폼 계층**을 구현한 것이다. `netlab/`은 프로토콜 구성을 다룬 실습 랩이다.
+**운용·플랫폼 계층**을 구현한 것이다. `netlab/`은 4대 라우터 실습 랩이며,
+`closedloop/`가 K8s에 배포된 AI 탐지기로 이 랩을 구동한다(에뮬레이션).

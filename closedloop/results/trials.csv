@@ -1,0 +1,31 @@
+condition,failure,timers,mode,trial,first_flag_t,traffic_off_link_at_failure_r1,traffic_off_link_at_failure_r3,detect_calls,detect_errors,detect_latency_ms_mean,probe_interval_s,probes_in_window,lost_in_window,loss_pct,loss_pct_sent,outage_s,outage_start_rel_s,unreachable_s_total,probe_errors,ttl_last_reply_before_failure,drain_lead_s
+silent-default,silent,10/40 (default),proactive,1,14,True,True,63,0,7.5,0.104,577,0,0.0,0.0,0.0,,0.0,0,63,1.961
+silent-default,silent,10/40 (default),reactive,1,14,False,False,63,0,11.7,0.104,432,214,62.217,49.537,37.33,-0.033,37.33,30,64,
+silent-default,silent,10/40 (default),proactive,2,14,True,True,63,0,10.0,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.97
+silent-default,silent,10/40 (default),reactive,2,14,False,False,63,0,6.0,0.104,333,87,57.191,26.126,34.314,-0.021,34.314,50,64,
+silent-default,silent,10/40 (default),proactive,3,14,True,True,63,0,8.8,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.953
+silent-default,silent,10/40 (default),reactive,3,14,False,False,63,0,6.3,0.104,358,128,60.04,35.754,36.024,-0.044,36.024,46,64,
+silent-default,silent,10/40 (default),proactive,4,14,True,True,63,0,5.3,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.986
+silent-default,silent,10/40 (default),reactive,4,14,False,False,63,0,8.2,0.104,479,212,53.656,44.259,32.194,-0.029,32.194,20,64,
+silent-default,silent,10/40 (default),proactive,5,14,True,True,63,0,5.0,0.104,577,0,0.0,0.0,0.0,,0.0,0,63,1.97
+silent-default,silent,10/40 (default),reactive,5,14,False,False,63,0,6.8,0.104,478,200,51.632,41.841,30.979,-0.028,30.979,20,64,
+silent-fast,silent,1/4,proactive,1,14,True,True,63,0,7.7,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.963
+silent-fast,silent,1/4,reactive,1,14,False,False,63,0,6.6,0.104,576,30,5.202,5.208,3.121,-0.075,3.121,0,64,
+silent-fast,silent,1/4,proactive,2,14,True,True,63,0,6.4,0.104,577,0,0.0,0.0,0.0,,0.0,0,63,1.978
+silent-fast,silent,1/4,reactive,2,14,False,False,63,0,7.0,0.104,576,31,5.374,5.382,3.224,-0.019,3.224,0,64,
+silent-fast,silent,1/4,proactive,3,14,True,True,63,0,12.4,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.971
+silent-fast,silent,1/4,reactive,3,14,False,False,63,0,8.9,0.104,575,36,6.24,6.261,3.744,-0.019,3.744,0,64,
+silent-fast,silent,1/4,proactive,4,14,True,True,63,0,6.8,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.959
+silent-fast,silent,1/4,reactive,4,14,False,False,63,0,5.3,0.104,576,33,5.748,5.729,3.449,-0.061,3.449,0,64,
+silent-fast,silent,1/4,proactive,5,14,True,True,63,0,8.3,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.956
+silent-fast,silent,1/4,reactive,5,14,False,False,63,0,5.5,0.104,576,38,6.587,6.597,3.952,-0.039,3.952,0,64,
+carrier-default,carrier,10/40 (default),proactive,1,14,True,True,63,0,6.1,0.104,577,0,0.0,0.0,0.0,,0.0,0,63,1.962
+carrier-default,carrier,10/40 (default),reactive,1,14,False,False,63,0,5.5,0.104,577,0,0.0,0.0,0.0,,0.0,0,64,
+carrier-default,carrier,10/40 (default),proactive,2,14,True,True,63,0,4.5,0.104,573,0,0.0,0.0,0.0,,0.0,0,63,1.966
+carrier-default,carrier,10/40 (default),reactive,2,14,False,False,63,0,6.3,0.104,577,0,0.0,0.0,0.0,,0.0,0,64,
+carrier-default,carrier,10/40 (default),proactive,3,14,True,True,63,0,4.4,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.968
+carrier-default,carrier,10/40 (default),reactive,3,14,False,False,63,0,6.2,0.104,576,0,0.0,0.0,0.0,,0.0,0,64,
+carrier-default,carrier,10/40 (default),proactive,4,14,True,True,63,0,7.4,0.104,560,0,0.0,0.0,0.0,,0.0,0,63,1.978
+carrier-default,carrier,10/40 (default),reactive,4,14,False,False,63,0,7.5,0.104,576,0,0.0,0.0,0.0,,0.0,0,64,
+carrier-default,carrier,10/40 (default),proactive,5,14,True,True,63,0,7.1,0.104,576,0,0.0,0.0,0.0,,0.0,0,63,1.977
+carrier-default,carrier,10/40 (default),reactive,5,14,False,False,63,0,10.2,0.104,576,0,0.0,0.0,0.0,,0.0,0,64,

@@ -65,6 +65,38 @@ via Grafana total requests = 52
 - Last route hops
 - Total requests
 
+## Closed-loop metrics
+
+The closed-loop controller ([`closedloop/`](../closedloop/)) exports its own
+metrics on the host (port 9101); Prometheus scrapes them as job
+`closedloop-controller`, and Grafana provisions a second dashboard,
+**Closed Loop (detect -> drain)** (`grafana/dashboards/closedloop.json`).
+
+| Metric | Meaning |
+|---|---|
+| `closedloop_detect_requests_total{result}` / `closedloop_detect_latency_seconds` | calls from the controller to the K8s-served `/detect` |
+| `closedloop_detect_imminent_links` | imminent-loss links in the last detect call |
+| `closedloop_link_flagged{link}` / `closedloop_link_flag_events_total{link}` | the replayed satellite link, mapped to lab link r1-r3, was flagged |
+| `closedloop_link_drained{link}` / `closedloop_drain_actions_total{link}` | controller drained r1-r3 (OSPF cost raised on both ends) |
+| `closedloop_link_failed{link}` | emulated failure applied to r1-r3 |
+| `closedloop_probe_up`, `closedloop_probe_{replies,lost}_total` | live ping r1 -> r3 loopback |
+| `closedloop_trial_{loss_ratio,outage_seconds,drain_lead_seconds}{mode,condition}` | result of the last trial |
+
+```bash
+# run Prometheus + Grafana without the compose router (the closed loop uses
+# the router on kind); on colima the host is 192.168.5.2 from containers:
+HOST_GATEWAY_IP=192.168.5.2 docker compose -f observability/docker-compose.yml up -d --no-deps prometheus grafana
+```
+
+With `--no-deps` the compose `router` is not started, so the `leo-router` target
+shows *down*; the router on kind is reached through a NodePort that
+load-balances across replicas, so it is not scraped per pod here (that needs
+an in-cluster Prometheus).
+
+Verified during the closed-loop runs: target `closedloop-controller` **up**,
+`closedloop_*` series queryable in Prometheus and through the Grafana
+datasource, dashboard provisioned.
+
 ## What this demonstrates
 
 - Instrumenting a service with **application and domain metrics**, not just
@@ -81,4 +113,5 @@ observability/
   prometheus/prometheus.yml     scrape config
   grafana/provisioning/         datasource + dashboard providers (as code)
   grafana/dashboards/router.json
+  grafana/dashboards/closedloop.json   closed-loop dashboard (closedloop/)
 ```

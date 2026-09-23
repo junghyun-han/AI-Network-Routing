@@ -1,0 +1,7 @@
+condition,failure,timers,mode,trials,loss_pct_mean,loss_pct_std,loss_pct_sent_mean,outage_s_mean,outage_s_std,outage_s_min,outage_s_max,lost_probes_mean,drain_lead_s_mean,off_link_before_failure
+silent-default,silent,10/40 (default),proactive,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.968,5/5
+silent-default,silent,10/40 (default),reactive,5,56.95,4.37,39.5,34.17,2.62,30.98,37.33,168.2,,0/5
+silent-fast,silent,1/4,proactive,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.965,5/5
+silent-fast,silent,1/4,reactive,5,5.83,0.58,5.84,3.5,0.35,3.12,3.95,33.6,,0/5
+carrier-default,carrier,10/40 (default),proactive,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.97,5/5
+carrier-default,carrier,10/40 (default),reactive,5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,,0/5

@@ -47,10 +47,19 @@ flowchart TB
     CSV --> SV
     TOPO --> TR
     TOPO --> IM
+    subgraph loop["closedloop/ - detect -> act on a live lab"]
+        CTRL["controller.py<br/>poll /detect, drain via OSPF cost"]
+        LAB["netlab/ FRR routers<br/>OSPF ring r1-r2-r3"]
+        MON["Prometheus + Grafana"]
+    end
+
     ENV --> API
     MODEL --> API
     W --> API
     API --> DOCK --> K8S
+    K8S -- "GET /detect (NodePort)" --> CTRL
+    CTRL -- "vtysh: ip ospf cost" --> LAB
+    CTRL -- "/metrics" --> MON
 ```
 
 ## Components and interfaces
@@ -66,6 +75,7 @@ flowchart TB
 | `traffic/` | topology | E2E visibility report | CLI + networkx |
 | `impact/` | topology | criticality report | CLI + networkx |
 | `serving/` | HTTP request | route / anomaly JSON | REST: `GET /route/{t0}`, `GET /detect/{t0}` |
+| `closedloop/` | `/detect` from the K8s-served policy | OSPF drain on the lab link, loss/outage measurements, metrics | controller + experiment CLI, Prometheus `:9101` |
 
 ### Serving API contract
 
@@ -88,6 +98,9 @@ GET /detect/{t0}?tau_s -> {t0, tau_s, n_live_links, n_imminent,
 - **Separation of concerns for deployment.** The routing code is read-only
   input to the serving layer; the container packages inference only, which is
   the boundary a production system would draw.
+- **Detection drives action.** The closed loop consumes the same `/detect`
+  contract the API exposes; it only acts on the lab through the routers' own
+  control plane (OSPF cost), so the network still decides the path.
 - **Local mirrors cloud.** The same image and Kubernetes manifests run on a
   local `kind` cluster and on EKS; observability and CI wrap the same service.
 
