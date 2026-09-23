@@ -1,0 +1,18 @@
+# Exposes the leo-router Deployment (serving/k8s/deployment.yaml) on the kind
+# node's port 30080, mapped to 127.0.0.1:30080 on the host by kind-cluster.yaml.
+# The closed-loop controller polls GET /detect/{t0} through this Service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: leo-router-nodeport
+  labels:
+    app: leo-router
+spec:
+  type: NodePort
+  selector:
+    app: leo-router
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+      nodePort: 30080

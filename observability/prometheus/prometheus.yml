@@ -6,3 +6,9 @@ scrape_configs:
   - job_name: leo-router
     static_configs:
       - targets: ["router:8000"]
+
+  # closed-loop controller (closedloop/): runs on the host while an
+  # experiment or a replay is running; "down" otherwise.
+  - job_name: closedloop-controller
+    static_configs:
+      - targets: ["host.docker.internal:9101"]

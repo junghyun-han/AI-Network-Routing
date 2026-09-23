@@ -1,0 +1,444 @@
+{
+ "source": "sim/env_v2.py (68 satellites, 150 km link range, 1 s step)",
+ "detector": "serving /detect/{t0}, tau_s=2.0",
+ "tau_s": 2.0,
+ "all_breaks": {
+  "n_breaks": 14360,
+  "flagged_before_break_pct": 100.0,
+  "lead_s_histogram": {
+   "1": 7444,
+   "2": 6838,
+   "3": 33,
+   "4": 33,
+   "20": 12
+  },
+  "median_lead_s": 1
+ },
+ "gradual_breaks": {
+  "n_breaks": 7285,
+  "flagged_before_break_pct": 100.0,
+  "lead_s_histogram": {
+   "1": 570,
+   "2": 6649,
+   "3": 33,
+   "4": 33
+  },
+  "median_lead_s": 2
+ },
+ "discontinuous_breaks": {
+  "n_breaks": 7075,
+  "flagged_before_break_pct": 100.0,
+  "lead_s_histogram": {
+   "1": 6874,
+   "2": 189,
+   "20": 12
+  },
+  "median_lead_s": 1
+ },
+ "rule": "earliest gradual (range-expiry) break with lead == median gradual lead, flagged only in the final lead seconds, live for the whole 10 s pre-roll",
+ "n_candidates": 5673,
+ "sat_link": {
+  "i": 26,
+  "j": 44
+ },
+ "live_from_t": 4,
+ "first_flag_t": 14,
+ "break_t": 16,
+ "lead_s": 2,
+ "replay": {
+  "t_start": 4,
+  "t_end": 66,
+  "pre_roll_s": 10,
+  "post_roll_s": 50,
+  "speed": 1.0,
+  "note": "1 simulated second = 1 wall-clock second (no compression)"
+ },
+ "lab_link": {
+  "name": "r1-r3",
+  "subnet": "10.0.13.0/24",
+  "ends": [
+   "r1",
+   "r3"
+  ]
+ },
+ "trace": [
+  {
+   "t": 4,
+   "dist_km": 148.26,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 5,
+   "dist_km": 144.69,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 6,
+   "dist_km": 141.79,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 7,
+   "dist_km": 139.62,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 8,
+   "dist_km": 138.19,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 9,
+   "dist_km": 137.55,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 10,
+   "dist_km": 137.69,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 11,
+   "dist_km": 138.61,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 12,
+   "dist_km": 140.3,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 13,
+   "dist_km": 142.73,
+   "live": true,
+   "flagged": false
+  },
+  {
+   "t": 14,
+   "dist_km": 145.87,
+   "live": true,
+   "flagged": true
+  },
+  {
+   "t": 15,
+   "dist_km": 149.67,
+   "live": true,
+   "flagged": true
+  },
+  {
+   "t": 16,
+   "dist_km": 154.08,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 17,
+   "dist_km": 159.05,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 18,
+   "dist_km": 164.53,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 19,
+   "dist_km": 170.47,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 20,
+   "dist_km": 176.82,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 21,
+   "dist_km": 183.55,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 22,
+   "dist_km": 190.6,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 23,
+   "dist_km": 197.96,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 24,
+   "dist_km": 205.57,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 25,
+   "dist_km": 213.43,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 26,
+   "dist_km": 221.49,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 27,
+   "dist_km": 229.75,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 28,
+   "dist_km": 238.17,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 29,
+   "dist_km": 246.75,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 30,
+   "dist_km": 255.46,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 31,
+   "dist_km": 264.29,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 32,
+   "dist_km": 273.24,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 33,
+   "dist_km": 282.28,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 34,
+   "dist_km": 291.42,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 35,
+   "dist_km": 300.64,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 36,
+   "dist_km": 309.94,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 37,
+   "dist_km": 319.3,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 38,
+   "dist_km": 328.73,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 39,
+   "dist_km": 338.22,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 40,
+   "dist_km": 509.63,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 41,
+   "dist_km": 508.71,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 42,
+   "dist_km": 508.0,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 43,
+   "dist_km": 507.5,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 44,
+   "dist_km": 507.22,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 45,
+   "dist_km": 507.15,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 46,
+   "dist_km": 507.29,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 47,
+   "dist_km": 507.65,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 48,
+   "dist_km": 508.22,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 49,
+   "dist_km": 509.01,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 50,
+   "dist_km": 510.0,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 51,
+   "dist_km": 511.21,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 52,
+   "dist_km": 512.62,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 53,
+   "dist_km": 514.24,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 54,
+   "dist_km": 516.07,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 55,
+   "dist_km": 518.1,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 56,
+   "dist_km": 520.33,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 57,
+   "dist_km": 522.75,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 58,
+   "dist_km": 525.38,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 59,
+   "dist_km": 528.19,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 60,
+   "dist_km": 531.2,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 61,
+   "dist_km": 534.39,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 62,
+   "dist_km": 537.76,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 63,
+   "dist_km": 541.31,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 64,
+   "dist_km": 545.04,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 65,
+   "dist_km": 548.94,
+   "live": false,
+   "flagged": false
+  },
+  {
+   "t": 66,
+   "dist_km": 553.01,
+   "live": false,
+   "flagged": false
+  }
+ ]
+}
