@@ -1,0 +1,12 @@
+# torch: CPU build is enough (pip install torch --index-url https://download.pytorch.org/whl/cpu)
+torch
+pandas
+numpy
+matplotlib
+scikit-learn
+ortools
+networkx
+fastapi
+uvicorn[standard]
+httpx
+prometheus-client

@@ -69,7 +69,7 @@ Kubernetes(kind)에 배포한 라우팅 정책의 임박 단절 탐지(`GET /det
 
 ```bash
 # 라우팅 지능
-pip install pandas numpy matplotlib scikit-learn ortools networkx fastapi "uvicorn[standard]" torch
+pip install -r requirements.txt
 python analysis/ops_analysis.py --episodes data/episodes_all_v2.csv --out analysis
 python anomaly/detect.py --out anomaly
 python solver/optimality_gap.py --episodes data/episodes_all_v2.csv --out solver
