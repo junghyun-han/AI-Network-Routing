@@ -16,20 +16,20 @@ from typing import List, Optional, Tuple
 import networkx as nx
 import numpy as np
 
-from sim.env_v2 import ETRIEnvV2
+from sim.env_v2 import LeoEnvV2
 
 SRC = "SRC"
 DST = "DST"
 
 
-def in_range_sats(env: ETRIEnvV2, t: int, ground_idx: int) -> np.ndarray:
+def in_range_sats(env: LeoEnvV2, t: int, ground_idx: int) -> np.ndarray:
     pos = env.positions(t)
     g = np.array(env.grounds[ground_idx], dtype=np.float32)
     d = np.linalg.norm(pos - g[None, :], axis=1)
     return np.where(d < float(env.p.link_range_km))[0]
 
 
-def build_graph(env: ETRIEnvV2, t: int, weight: str = "dist") -> nx.Graph:
+def build_graph(env: LeoEnvV2, t: int, weight: str = "dist") -> nx.Graph:
     """Satellite mesh at time t. Edge weight is inter-satellite distance
     (km) if weight='dist', else 1 (hop count)."""
     R = float(env.p.link_range_km)
@@ -45,7 +45,7 @@ def build_graph(env: ETRIEnvV2, t: int, weight: str = "dist") -> nx.Graph:
     return G
 
 
-def with_terminals(env: ETRIEnvV2, t: int, G: nx.Graph) -> nx.Graph:
+def with_terminals(env: LeoEnvV2, t: int, G: nx.Graph) -> nx.Graph:
     """Attach virtual SRC/DST nodes to the satellites in range of the two
     ground stations (zero-weight access links)."""
     H = G.copy()
@@ -58,7 +58,7 @@ def with_terminals(env: ETRIEnvV2, t: int, G: nx.Graph) -> nx.Graph:
     return H
 
 
-def e2e_path(env: ETRIEnvV2, t: int, weight: str = "dist"
+def e2e_path(env: LeoEnvV2, t: int, weight: str = "dist"
              ) -> Optional[Tuple[List[int], float, int]]:
     """Shortest end-to-end route at time t.
     Returns (satellite path, total distance km, ISL hop count) or None if

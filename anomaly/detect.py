@@ -45,7 +45,7 @@ from sklearn.metrics import (average_precision_score, f1_score,
 
 # import the simulator physics
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from sim.env_v2 import ETRIEnvV2  # noqa: E402
+from sim.env_v2 import LeoEnvV2  # noqa: E402
 
 LOOKAHEAD_W = 30          # seconds to look ahead for a real failure
 TAUS = [2, 5]             # "imminent" thresholds (s) to detect
@@ -59,7 +59,7 @@ BL = "#2c7fb8"
 GY = "#5b6b7a"
 
 
-def predicted_trem(env: ETRIEnvV2, t: int, R: float, cap: float) -> np.ndarray:
+def predicted_trem(env: LeoEnvV2, t: int, R: float, cap: float) -> np.ndarray:
     """Vectorized copy of env._pred_remaining_contact_time over all pairs.
     Returns [N, N]; approaching links -> cap (won't fail soon)."""
     dt = float(env.p.time_step)
@@ -74,7 +74,7 @@ def predicted_trem(env: ETRIEnvV2, t: int, R: float, cap: float) -> np.ndarray:
     return trem
 
 
-def actual_ttf(env: ETRIEnvV2, t: int, active: np.ndarray, R: float) -> np.ndarray:
+def actual_ttf(env: LeoEnvV2, t: int, active: np.ndarray, R: float) -> np.ndarray:
     """Actual time-to-failure (s) for each active pair at time t, by looking
     forward in the real simulation. CENSORED if it survives the window."""
     ttf = np.full(active.shape, CENSORED, dtype=np.int32)
@@ -85,7 +85,7 @@ def actual_ttf(env: ETRIEnvV2, t: int, active: np.ndarray, R: float) -> np.ndarr
     return ttf
 
 
-def build_dataset(env: ETRIEnvV2):
+def build_dataset(env: LeoEnvV2):
     """Returns per-live-link arrays: predicted contact time, normalized
     current distance (baseline signal), and actual time-to-failure."""
     R = float(env.p.link_range_km)
@@ -117,7 +117,7 @@ def detector_scores(pred, dist, cap):
 
 
 def evaluate(pred, dist, ttf):
-    cap = float(ETRIEnvV2().p.TREM_CAP_S)
+    cap = float(LeoEnvV2().p.TREM_CAP_S)
     scores = detector_scores(pred, dist, cap)
     rows = {}
     for tau in TAUS:
@@ -300,7 +300,7 @@ def main():
     args = ap.parse_args()
     os.makedirs(os.path.join(args.out, "figures"), exist_ok=True)
 
-    env = ETRIEnvV2()
+    env = LeoEnvV2()
     pred, dist, ttf = build_dataset(env)
     rows, scores = evaluate(pred, dist, ttf)
 

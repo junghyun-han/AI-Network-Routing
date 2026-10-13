@@ -35,7 +35,7 @@ import networkx as nx
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from sim.env_v2 import ETRIEnvV2                       # noqa: E402
+from sim.env_v2 import LeoEnvV2                       # noqa: E402
 from sim.topology import SRC, DST, build_graph, with_terminals  # noqa: E402
 
 HL = "#c0392b"
@@ -44,7 +44,7 @@ GY = "#5b6b7a"
 DISCONNECT_PENALTY = None  # marker for SPOF
 
 
-def analyze(env: ETRIEnvV2, stride: int):
+def analyze(env: LeoEnvV2, stride: int):
     per_link_delta = defaultdict(list)   # (a,b) -> list of km added on failure
     per_link_spof = defaultdict(int)     # (a,b) -> times its failure disconnects
     per_link_onpath = defaultdict(int)   # (a,b) -> times it is on the route
@@ -196,7 +196,7 @@ def main():
     args = ap.parse_args()
     os.makedirs(os.path.join(args.out, "figures"), exist_ok=True)
 
-    env = ETRIEnvV2()
+    env = LeoEnvV2()
     per_link_delta, per_link_spof, per_link_onpath, all_impacts, n_events = \
         analyze(env, args.stride)
     rows = rank(per_link_delta, per_link_spof, per_link_onpath)

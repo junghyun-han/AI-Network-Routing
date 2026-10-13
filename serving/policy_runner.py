@@ -20,7 +20,7 @@ from typing import Dict, List
 import numpy as np
 import torch
 
-from sim.env_v2 import ETRIEnvV2, NODE_FEAT_DIM, EDGE_FEAT_DIM
+from sim.env_v2 import LeoEnvV2, NODE_FEAT_DIM, EDGE_FEAT_DIM
 from sim.model_v2 import PPOAgentV2
 
 DEFAULT_MODEL = os.environ.get("MODEL_PATH", "serving/model/PPO-GCN_seed0.pt")
@@ -33,7 +33,7 @@ class Router:
         self.agent = PPOAgentV2(kind=self.kind, node_dim=NODE_FEAT_DIM,
                                 edge_dim=EDGE_FEAT_DIM, device=device)
         self.agent.load(weight_path)
-        self.env = ETRIEnvV2()
+        self.env = LeoEnvV2()
 
     # -- end-to-end routing -------------------------------------------------
 

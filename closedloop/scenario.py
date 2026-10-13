@@ -37,7 +37,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
-from sim.env_v2 import ETRIEnvV2  # noqa: E402
+from sim.env_v2 import LeoEnvV2  # noqa: E402
 
 TAU_S = 2.0          # serving /detect default
 PRE_ROLL_S = 10      # replay starts this many seconds before the first flag
@@ -47,7 +47,7 @@ LAB_LINK = {"name": "r1-r3", "subnet": "10.0.13.0/24",
             "ends": ["r1", "r3"]}
 
 
-def flags_at(env: ETRIEnvV2, t: int, iu, ju, tau: float) -> np.ndarray:
+def flags_at(env: LeoEnvV2, t: int, iu, ju, tau: float) -> np.ndarray:
     """Exactly serving/policy_runner.Router.detect, vectorized over pairs."""
     R = float(env.p.link_range_km)
     cap = float(env.p.TREM_CAP_S)
@@ -63,7 +63,7 @@ def flags_at(env: ETRIEnvV2, t: int, iu, ju, tau: float) -> np.ndarray:
 
 
 def build() -> dict:
-    env = ETRIEnvV2()
+    env = LeoEnvV2()
     R = float(env.p.link_range_km)
     H = int(env.p.horizon)
     iu, ju = np.triu_indices(int(env.N), k=1)

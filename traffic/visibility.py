@@ -32,7 +32,7 @@ import networkx as nx
 import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from sim.env_v2 import ETRIEnvV2                       # noqa: E402
+from sim.env_v2 import LeoEnvV2                       # noqa: E402
 from sim.topology import SRC, DST, build_graph, with_terminals, e2e_path  # noqa: E402
 
 HL = "#c0392b"
@@ -40,7 +40,7 @@ BL = "#2c7fb8"
 GY = "#5b6b7a"
 
 
-def collect(env: ETRIEnvV2, stride: int):
+def collect(env: LeoEnvV2, stride: int):
     times, hops, dists, mincut = [], [], [], []
     edge_load = Counter()
     connected = 0
@@ -196,7 +196,7 @@ def main():
     args = ap.parse_args()
     os.makedirs(os.path.join(args.out, "figures"), exist_ok=True)
 
-    env = ETRIEnvV2()
+    env = LeoEnvV2()
     (times, hops, dists, mincut, edge_load,
      connected, total) = collect(env, args.stride)
 

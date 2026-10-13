@@ -35,7 +35,7 @@ import pandas as pd
 from ortools.sat.python import cp_model
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from sim.env_v2 import ETRIEnvV2, det_start_sat  # noqa: E402
+from sim.env_v2 import LeoEnvV2, det_start_sat  # noqa: E402
 
 SCALE = 10_000               # float reward -> integer for CP-SAT (small
                              # coefficients keep the solver fast)
@@ -48,7 +48,7 @@ GY = "#5b6b7a"
 # time-expanded tables (identical formulas to the environment)
 # --------------------------------------------------------------------------
 
-def teg_tables(env: ETRIEnvV2, t0: int, L: int):
+def teg_tables(env: LeoEnvV2, t0: int, L: int):
     p = env.p
     R = float(p.link_range_km)
     dst = np.array(env.grounds[1], dtype=np.float32)
@@ -95,7 +95,7 @@ def align_norm_tensor(pos: np.ndarray, omega: float, taumax: float) -> np.ndarra
 # CP-SAT maximum-reward path with turn penalty
 # --------------------------------------------------------------------------
 
-def solve_optimal(env: ETRIEnvV2, t0: int, L: int = 10):
+def solve_optimal(env: LeoEnvV2, t0: int, L: int = 10):
     """Returns (best_reward, path) for the offline optimum, matching the
     oracle's relaxations (free start, backtrack allowed)."""
     p = env.p
@@ -214,7 +214,7 @@ def solve_optimal(env: ETRIEnvV2, t0: int, L: int = 10):
 # validation: execute the solved path in the real environment
 # --------------------------------------------------------------------------
 
-def execute_reward(env: ETRIEnvV2, t0: int, path: list) -> float:
+def execute_reward(env: LeoEnvV2, t0: int, path: list) -> float:
     env.p.allow_backtrack = True
     env.reset(t0=t0, start=int(path[0]))
     total = 0.0
@@ -248,14 +248,14 @@ def main():
     step = max(1, len(all_t0) // args.n_t0)
     t0s = all_t0[::step][:args.n_t0]
 
-    env = ETRIEnvV2()
+    env = LeoEnvV2()
     recs = []
     n_valid = 0
     for t0 in t0s:
         opt, path = solve_optimal(env, int(t0))
         if opt is None or not path:
             continue
-        env2 = ETRIEnvV2()
+        env2 = LeoEnvV2()
         exe = execute_reward(env2, int(t0), path)
         valid = abs(exe - opt) < 1e-3
         n_valid += int(valid)

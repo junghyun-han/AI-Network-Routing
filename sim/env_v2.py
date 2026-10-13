@@ -20,7 +20,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 
 
-class ETRIParameters:
+class LeoParameters:
     LEO_A = {
         "height": 1.0e6,  # 1000 km
         "beam_radius": 30,
@@ -35,8 +35,8 @@ class ETRIParameters:
 
 class ParamsV2:
     # ---- 물리 / 도메인 : v1 과 동일, 건드리지 않음 ----
-    height = ETRIParameters.LEO_A["height"]
-    LEO_A = ETRIParameters.LEO_A
+    height = LeoParameters.LEO_A["height"]
+    LEO_A = LeoParameters.LEO_A
 
     ground_size = 300
     ground_stations = [(-300, 200), (-300, 0), (-300, -200), (300, 100), (300, -100)]
@@ -117,7 +117,7 @@ def det_start_sat(st: np.ndarray, src_xy, radius: float) -> int:
     return int(k)
 
 
-class ETRIEnvV2:
+class LeoEnvV2:
     def __init__(self, p: Optional[ParamsV2] = None):
         self.p = p if p is not None else ParamsV2()
         self.t = 0
