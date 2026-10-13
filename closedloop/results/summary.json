@@ -1,0 +1,161 @@
+{
+ "environment": {
+  "started": "2026-09-24T00:19:36+09:00",
+  "api": "http://127.0.0.1:30080",
+  "frr": "FRRouting 8.4.4 (dad6e8e5a2b8) on Linux(6.8.0-117-generic).",
+  "sat_link": {
+   "i": 26,
+   "j": 44
+  },
+  "lab_link": {
+   "name": "r1-r3",
+   "subnet": "10.0.13.0/24",
+   "ends": [
+    "r1",
+    "r3"
+   ]
+  },
+  "first_flag_t": 14,
+  "break_t": 16,
+  "probe": {
+   "router": "r1",
+   "src": "10.255.1.1",
+   "dst": "10.255.3.3"
+  },
+  "probe_interval_s": 0.1,
+  "window_s": [
+   -10.0,
+   50.0
+  ],
+  "drain_cost": 1000,
+  "ospf_timers_default": "hello 10s / dead 40s",
+  "conditions": {
+   "silent-default": {
+    "failure": "silent",
+    "ospf_timers_on_link": {
+     "r1": "hello 10s / dead 40s",
+     "r3": "hello 10s / dead 40s"
+    }
+   },
+   "silent-fast": {
+    "failure": "silent",
+    "ospf_timers_on_link": {
+     "r1": "hello 1s / dead 4s",
+     "r3": "hello 1s / dead 4s"
+    }
+   },
+   "carrier-default": {
+    "failure": "carrier",
+    "ospf_timers_on_link": {
+     "r1": "hello 10s / dead 40s",
+     "r3": "hello 10s / dead 40s"
+    }
+   }
+  },
+  "finished": "2026-09-24T01:10:12+09:00"
+ },
+ "summary": [
+  {
+   "condition": "silent-default",
+   "failure": "silent",
+   "timers": "10/40 (default)",
+   "mode": "proactive",
+   "trials": 5,
+   "loss_pct_mean": 0.0,
+   "loss_pct_std": 0.0,
+   "loss_pct_sent_mean": 0.0,
+   "outage_s_mean": 0.0,
+   "outage_s_std": 0.0,
+   "outage_s_min": 0.0,
+   "outage_s_max": 0.0,
+   "lost_probes_mean": 0.0,
+   "drain_lead_s_mean": 1.968,
+   "off_link_before_failure": "5/5"
+  },
+  {
+   "condition": "silent-default",
+   "failure": "silent",
+   "timers": "10/40 (default)",
+   "mode": "reactive",
+   "trials": 5,
+   "loss_pct_mean": 56.95,
+   "loss_pct_std": 4.37,
+   "loss_pct_sent_mean": 39.5,
+   "outage_s_mean": 34.17,
+   "outage_s_std": 2.62,
+   "outage_s_min": 30.98,
+   "outage_s_max": 37.33,
+   "lost_probes_mean": 168.2,
+   "drain_lead_s_mean": null,
+   "off_link_before_failure": "0/5"
+  },
+  {
+   "condition": "silent-fast",
+   "failure": "silent",
+   "timers": "1/4",
+   "mode": "proactive",
+   "trials": 5,
+   "loss_pct_mean": 0.0,
+   "loss_pct_std": 0.0,
+   "loss_pct_sent_mean": 0.0,
+   "outage_s_mean": 0.0,
+   "outage_s_std": 0.0,
+   "outage_s_min": 0.0,
+   "outage_s_max": 0.0,
+   "lost_probes_mean": 0.0,
+   "drain_lead_s_mean": 1.965,
+   "off_link_before_failure": "5/5"
+  },
+  {
+   "condition": "silent-fast",
+   "failure": "silent",
+   "timers": "1/4",
+   "mode": "reactive",
+   "trials": 5,
+   "loss_pct_mean": 5.83,
+   "loss_pct_std": 0.58,
+   "loss_pct_sent_mean": 5.84,
+   "outage_s_mean": 3.5,
+   "outage_s_std": 0.35,
+   "outage_s_min": 3.12,
+   "outage_s_max": 3.95,
+   "lost_probes_mean": 33.6,
+   "drain_lead_s_mean": null,
+   "off_link_before_failure": "0/5"
+  },
+  {
+   "condition": "carrier-default",
+   "failure": "carrier",
+   "timers": "10/40 (default)",
+   "mode": "proactive",
+   "trials": 5,
+   "loss_pct_mean": 0.0,
+   "loss_pct_std": 0.0,
+   "loss_pct_sent_mean": 0.0,
+   "outage_s_mean": 0.0,
+   "outage_s_std": 0.0,
+   "outage_s_min": 0.0,
+   "outage_s_max": 0.0,
+   "lost_probes_mean": 0.0,
+   "drain_lead_s_mean": 1.97,
+   "off_link_before_failure": "5/5"
+  },
+  {
+   "condition": "carrier-default",
+   "failure": "carrier",
+   "timers": "10/40 (default)",
+   "mode": "reactive",
+   "trials": 5,
+   "loss_pct_mean": 0.0,
+   "loss_pct_std": 0.0,
+   "loss_pct_sent_mean": 0.0,
+   "outage_s_mean": 0.0,
+   "outage_s_std": 0.0,
+   "outage_s_min": 0.0,
+   "outage_s_max": 0.0,
+   "lost_probes_mean": 0.0,
+   "drain_lead_s_mean": null,
+   "off_link_before_failure": "0/5"
+  }
+ ]
+}

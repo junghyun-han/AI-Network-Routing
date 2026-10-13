@@ -41,6 +41,19 @@ kubectl port-forward svc/leo-router 8080:80
 curl localhost:8080/route/300
 ```
 
+For the closed loop ([`closedloop/`](../closedloop/)), the cluster is created
+with `closedloop/k8s/kind-cluster.yaml` (host port 30080 mapped into the node)
+and `closedloop/k8s/router-nodeport.yaml` adds a NodePort Service, so the
+controller on the host reaches the Service (kube-proxy load-balances across
+both replicas) instead of a single pod via port-forward:
+
+```bash
+kind create cluster --name leo --config closedloop/k8s/kind-cluster.yaml
+kind load docker-image leo-router:latest --name leo
+kubectl apply -f serving/k8s/deployment.yaml -f closedloop/k8s/router-nodeport.yaml
+curl localhost:30080/detect/14      # the controller polls this every second
+```
+
 Autoscaling (optional, needs metrics-server):
 
 ```bash

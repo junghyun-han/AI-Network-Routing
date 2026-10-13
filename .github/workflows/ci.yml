@@ -57,6 +57,11 @@ jobs:
           print("serving smoke OK:", r["hops"], "hops,", d["n_imminent"], "imminent")
           PY
 
+      - name: Closed-loop logic (no Docker)
+        run: |
+          python closedloop/scenario.py --check
+          python closedloop/test_closedloop.py
+
   docker:
     name: build container image
     runs-on: ubuntu-latest

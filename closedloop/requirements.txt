@@ -1,0 +1,4 @@
+# host-side controller + experiment (the policy itself runs in the container)
+numpy>=1.26
+matplotlib>=3.8
+prometheus-client>=0.21

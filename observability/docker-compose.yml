@@ -20,6 +20,11 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9090:9090"
+    extra_hosts:
+      # the closed-loop controller (closedloop/) runs on the host.
+      # host-gateway works on Docker Desktop / Linux; on colima use
+      # HOST_GATEWAY_IP=192.168.5.2 (colima's host.lima.internal).
+      - "host.docker.internal:${HOST_GATEWAY_IP:-host-gateway}"
     depends_on:
       - router
 

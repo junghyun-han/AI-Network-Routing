@@ -1,0 +1,14 @@
+# kind cluster for the closed loop: same as `kind create cluster --name leo`
+# plus a host port mapping so the controller on the host can reach the
+# router Service through a NodePort (load-balanced across the replicas by
+# kube-proxy, unlike `kubectl port-forward`, which pins a single pod).
+#   kind create cluster --name leo --config closedloop/k8s/kind-cluster.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080      # NodePort of leo-router-nodeport
+        hostPort: 30080
+        listenAddress: "127.0.0.1"
+        protocol: TCP
